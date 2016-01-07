@@ -1,0 +1,25 @@
+{
+  "name": "polymer-demo",
+  "description": "a lunch and learn demo",
+  "main": "/public/index.html",
+  "authors": [
+    "Matt Johnston <matt.tw.johnston@gmail.com>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "polymer"
+  ],
+  "homepage": "https://github.com/johnstonmatt/polymerDemo",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iron-elements": "PolymerElements/iron-elements#~1.0.7"
+  }
+}
