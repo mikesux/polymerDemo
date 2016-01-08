@@ -39,7 +39,7 @@
         <paper-button onclick="setAudio()" raised>set audio</paper-button>
         <br>
         <br>
-        <paper-audio-player id="audioPlayer" src="gosh.mp3"></paper-audio-player>
+        <paper-audio-player id="audioPlayer" src="/music/gosh.mp3"></paper-audio-player>
         <paper-toast id="toast" text="" style="background-color: #00acc1;"></paper-toast>
 
     </div>
@@ -53,7 +53,7 @@
         var spinner = document.getElementById("spinner");
 
         var setAudio = function(){
-            audioPlayer.src = audioInput.value || "gosh.mp3";
+            audioPlayer.src = audioInput.value || "/music/gosh.mp3";
             audioInput.value = ""
 
         };
