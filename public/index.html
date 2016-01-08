@@ -11,39 +11,66 @@
     <link rel="import" href="/components/paper-toast/paper-toast.html">
     <link rel="import" href="/components/paper-input/paper-input.html">
     <link rel="import" href="/components/google-youtube/google-youtube.html">
+    <link rel="import" href="/components/paper-card/paper-card.html">
+    <link rel="import" href="/components/paper-audio-player/paper-audio-player.html">
+    <link rel="import" href="/components/paper-toolbar/paper-toolbar.html">
 </head>
 <body>
+
     <div class="center flex layout vertical">
+        <h2>Some Elements</h2>
         <paper-button onclick="toggleSpinner()" raised>toggle spinner</paper-button>
         <br>
         <paper-spinner id="spinner"></paper-spinner>
+        <br>
+        <br>
         <paper-input id="toastInput" label="type message for toast"></paper-input>
         <paper-button onclick="triggerToast()" raised>pop toaster</paper-button>
+        <br>
+        <br>
         <paper-input id="urlInput" label="paste youtube url"></paper-input>
         <paper-button onclick="setVideo()" raised>set video</paper-button>
         <br>
+        <br>
         <google-youtube id="youtube" height="270px" width="480px"></google-youtube>
+        <br>
+        <br>
+        <paper-input id="audioInput"  label="paste audio url"></paper-input>
+        <paper-button onclick="setAudio()" raised>set audio</paper-button>
+        <br>
+        <br>
+        <paper-audio-player id="audioPlayer" src="gosh.mp3"></paper-audio-player>
         <paper-toast id="toast" text="" style="background-color: #00acc1;"></paper-toast>
 
     </div>
     <script>
-
+        var audioInput = document.getElementById("audioInput");
+        var audioPlayer = document.getElementById("audioPlayer");
         var toast = document.getElementById("toast");
         var toastInput = document.getElementById("toastInput");
         var urlInput = document.getElementById("urlInput");
         var youtube = document.getElementById("youtube");
+        var spinner = document.getElementById("spinner");
+
+        var setAudio = function(){
+            audioPlayer.src = audioInput.value || "gosh.mp3";
+            audioInput.value = ""
+
+        };
         var setVideo = function() {
             var youtubeUrl = urlInput.value;
+            urlInput.value = "";
             var id = getVideoIdFromUrl(youtubeUrl);
             if(id){
+                console.log("setting video id to:",id);
                 youtube.setAttribute("video-id",id);
             }
         };
         var triggerToast = function(){
             toast.text = toastInput.value || "type message for toast";
+            toastInput.value = "";
             toast.open();
         };
-        var spinner = document.getElementById("spinner");
         var toggleSpinner = function(){
             spinner.active = !spinner.active
         };
@@ -53,7 +80,6 @@
             if (match && match[2].length == 11) {
                 return match[2];
             } else {
-                //error
                 toast.text="no such video";
                 toast.open();
                 return false
