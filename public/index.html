@@ -5,33 +5,91 @@
     <title>Polymer Demo</title>
     <script src="/components/webcomponentsjs/webcomponents.js"></script>
     <link rel="import" href="/components/polymer/polymer.html">
+    <link rel="import" href="/components/font-roboto/roboto.html">
     <link rel="import" href="/components/paper-button/paper-button.html">
     <link rel="import" href="/components/paper-spinner/paper-spinner.html">
     <link rel="import" href="/components/iron-flex-layout/classes/iron-flex-layout.html">
     <link rel="import" href="/components/paper-toast/paper-toast.html">
     <link rel="import" href="/components/paper-input/paper-input.html">
+    <link rel="import" href="/components/google-youtube/google-youtube.html">
+    <link rel="import" href="/components/paper-card/paper-card.html">
+    <link rel="import" href="/components/paper-audio-player/paper-audio-player.html">
+    <link rel="import" href="/components/paper-toolbar/paper-toolbar.html">
+    <style>
+        body{
+            font-family: 'Roboto';
+        }
+    </style>
 </head>
 <body>
+
     <div class="center flex layout vertical">
+        <h2>Some Elements</h2>
         <paper-button onclick="toggleSpinner()" raised>toggle spinner</paper-button>
         <br>
         <paper-spinner id="spinner"></paper-spinner>
-        <paper-input id="input" label="type message for toast"></paper-input>
+        <br>
+        <br>
+        <paper-input id="toastInput" label="type message for toast"></paper-input>
         <paper-button onclick="triggerToast()" raised>pop toaster</paper-button>
-
+        <br>
+        <br>
+        <paper-input id="urlInput" label="paste youtube url"></paper-input>
+        <paper-button onclick="setVideo()" raised>set video</paper-button>
+        <br>
+        <br>
+        <google-youtube id="youtube" height="270px" width="480px" video-id="lck68wyVUo4"></google-youtube>
+        <br>
+        <br>
+        <paper-input id="audioInput"  label="paste audio url"></paper-input>
+        <paper-button onclick="setAudio()" raised>set audio</paper-button>
+        <br>
+        <br>
+        <paper-audio-player id="audioPlayer" src="/music/gosh.mp3"></paper-audio-player>
         <paper-toast id="toast" text="" style="background-color: #00acc1;"></paper-toast>
 
     </div>
     <script>
+        var audioInput = document.getElementById("audioInput");
+        var audioPlayer = document.getElementById("audioPlayer");
         var toast = document.getElementById("toast");
-        var input = document.getElementById("input");
+        var toastInput = document.getElementById("toastInput");
+        var urlInput = document.getElementById("urlInput");
+        var youtube = document.getElementById("youtube");
+        var spinner = document.getElementById("spinner");
+
+        var setAudio = function(){
+            audioPlayer.src = audioInput.value || "/music/gosh.mp3";
+            audioInput.value = ""
+
+        };
+        var setVideo = function() {
+            var youtubeUrl = urlInput.value;
+            urlInput.value = "";
+            var id = getVideoIdFromUrl(youtubeUrl);
+            if(id){
+                console.log("setting video id to:",id);
+                youtube.setAttribute("video-id",id);
+            }
+        };
         var triggerToast = function(){
-            toast.text = input.value || "type message for toast";
+            toast.text = toastInput.value || "type message for toast";
+            toastInput.value = "";
             toast.open();
         };
-        var spinner = document.getElementById("spinner");
         var toggleSpinner = function(){
             spinner.active = !spinner.active
+        };
+        var getVideoIdFromUrl= function (url) {
+            var regExp = /^.*(youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            if (match && match[2].length == 11) {
+                return match[2];
+            } else {
+                toast.text="no such video";
+                toast.open();
+                return false
+            }
         };
 
     </script>
