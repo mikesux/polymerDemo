@@ -23,6 +23,7 @@
     "iron-elements": "PolymerElements/iron-elements#~1.0.7",
     "paper-elements": "PolymerElements/paper-elements#~1.0.7",
     "google-youtube": "~1.1.2",
-    "paper-audio-player": "~0.1.1"
+    "paper-audio-player": "~0.1.1",
+    "google-map": "~1.1.7"
   }
 }
